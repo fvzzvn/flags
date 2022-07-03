@@ -3,8 +3,14 @@ Repository for The Flags game
 
 # stack
 
-Server: Node.JS Express with socket.io module to handle sockets behaviour.
-Client: React.JS with socket.io, redux-toolkit and bootstrap.
+- Node.JS
+- Express
+- Auth0
+- Socket.io
+
+- React.JS 
+- socket.io
+- Redux-toolkit
 
 # modes
 
