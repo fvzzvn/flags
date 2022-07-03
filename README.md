@@ -9,7 +9,6 @@ Repository for The Flags game
 - Socket.io
 
 - React.JS 
-- socket.io
 - Redux-toolkit
 
 # modes
