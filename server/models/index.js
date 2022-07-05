@@ -34,7 +34,7 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId",
 });
 
-db.refreshToken.belongsTo(db.userm {
+db.refreshToken.belongsTo(db.user, {
   foreignKey: 'userId', targetKey: 'id'
 });
 
