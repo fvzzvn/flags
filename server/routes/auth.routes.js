@@ -1,6 +1,5 @@
 const { verifyRegister } = require("../middleware");
 const controller = require("../controllers/auth.controller");
-const verifyRegister = require("../middleware/verifyRegister");
 
 module.exports = function(app) {
   app.use(function(req, res, next) {

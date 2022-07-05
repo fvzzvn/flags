@@ -30,7 +30,7 @@ checkDuplicateUsernameOrEmail = async (req, res, next) => {
     next();
   } catch (error) {
     return res.status(500).send({
-      message: "Unable to validate username!"
+      message: error.message
     });
   }
 };
