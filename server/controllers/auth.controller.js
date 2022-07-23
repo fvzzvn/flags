@@ -41,43 +41,41 @@ exports.login = async (req, res) => {
     },
   }).then(async (user) => {
     if (!user) {
-      return res.status(404).send({ message: "Usernot found." });
+      return res.status(404).send({ message: "User not found." });
     }
-  });
-
-  const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-
-  if (!passwordIsValid) {
-    return res.status(401).send({
-      accessToken: null,
-      message: "Invalid Password!",
-    });
-  }
-
-  const token = jwt.sign({ id: user.id }, config.secret, {
-    expiresIn: config.jwtExpiration,
-  });
-
-  let refreshToken = await RefreshToken.createToken(user);
-  let authorities = [];
-  user
-    .getRoles()
-    .then((roles) => {
-      for (let i = 0; i < roles.length; i++) {
-        authorities.push("ROLE_" + roles[i].name.toUpperCase());
-      }
-      res.status(200).send({
-        id: user.id,
-        username: user.username,
-        email: user.email,
-        roles: authorities,
-        accessToken: token,
-        refreshToken: refreshToken,
+    let passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
+    if (!passwordIsValid) {
+      return res.status(401).send({
+        accessToken: null,
+        message: "Invalid Password!",
       });
-    })
-    .catch((error) => {
-      return res.status(500).send({ message: error.message });
+    }
+
+    const token = jwt.sign({ id: user.id }, config.secret, {
+      expiresIn: config.jwtExpiration,
     });
+
+    let refreshToken = await RefreshToken.createToken(user);
+    let authorities = [];
+    user
+      .getRoles()
+      .then((roles) => {
+        for (let i = 0; i < roles.length; i++) {
+          authorities.push("ROLE_" + roles[i].name.toUpperCase());
+        }
+        res.status(200).send({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          roles: authorities,
+          accessToken: token,
+          refreshToken: refreshToken,
+        });
+      })
+      .catch((error) => {
+        return res.status(500).send({ message: error.message });
+      });
+  });
 };
 
 exports.refreshToken = async (req, res) => {
